@@ -1,0 +1,27 @@
+{
+  "name": "douglaszuqueto/phpoo",
+  "description": "PHP OO",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Douglas Zuqueto",
+      "email": "douglas.zuqueto@gmail.com"
+    }
+  ],
+  "require": {
+    "slim/slim": "^3.0",
+    "monolog/monolog": "^1.19",
+    "php-activerecord/php-activerecord": "^1.1",
+    "vlucas/phpdotenv": "^2.2",
+    "tuupola/slim-jwt-auth": "^2.3"
+  },
+  "autoload": {
+    "classmap": [
+      "database"
+    ],
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}

@@ -1,0 +1,89 @@
+<?php
+#!/usr/bin/env php
+
+require __DIR__ . '/vendor/autoload.php';
+
+DEFINE('SEEDS_PATH', __DIR__ . "/database/seeds");
+
+class Artisan
+{
+    function __construct($args)
+    {
+        $this->args = $args;
+    }
+
+    function help()
+    {
+        echo "\n";
+        echo "Syntaxis: php artisan <command> [<args>]" . PHP_EOL;
+        echo PHP_EOL;
+        echo "Commands: \n";
+        echo "php artisan --help                  -->   Displays the help menu." . PHP_EOL;
+        echo "php artisan seed                    -->   Seed the database tables." . PHP_EOL;
+        echo PHP_EOL;
+    }
+
+    function exec()
+    {
+        if (count($this->args) <= 1) {
+            $this->help();
+        } else {
+
+            switch ($this->args[1]) {
+
+                case 'seed':
+                    if (isset($this->args[2])) {
+                        $seed = $this->args[2];
+                        $this->runSeed($seed);
+                        break;
+                    }
+                    $this->runSeeds();
+                    break;
+                case '--help':
+                    $this->help();
+                    break;
+                default:
+                    $this->help();
+                    break;
+
+            }
+
+        }
+    }
+
+    function runSeed($seed)
+    {
+        $file = SEEDS_PATH . '/' . $seed . '.php';
+        $this->seed($file);
+    }
+
+    function runSeeds()
+    {
+        $files = glob(SEEDS_PATH . '/*.php');
+        $this->run($files);
+    }
+
+    private function run($files)
+    {
+        foreach ($files as $file) {
+            $this->seed($file);
+        }
+
+    }
+
+    private function seed($file)
+    {
+        require_once($file);
+        $class = basename($file, '.php');
+
+        $obj = new $class;
+        if ($obj->run()) {
+            echo "Seed Created: $class \n";
+        } else {
+            echo "Seed Failed: $class \n";
+        }
+    }
+}
+
+$artisan = new Artisan($argv);
+$artisan->exec();
