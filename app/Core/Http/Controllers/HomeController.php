@@ -7,13 +7,13 @@ use Slim\Http\Response;
 
 class HomeController extends Controller
 {
-    public function __construct($container, $app)
+    public function __construct()
     {
-        parent::__construct($container, $app);
+        parent::__construct();
     }
 
     public function index(Request $request, Response $response, $args)
     {
-       return 'Home';
+        return 'Home';
     }
 }

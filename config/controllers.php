@@ -8,20 +8,24 @@ $controllers = [
 
 
 foreach ($controllers as $key => $value) {
-    if(isset($container[$key])){
+
+    if (isset($container[$key])) {
         return $container[$key];
     }
+
     $container[$key] = function ($c) use ($container, $app, $value) {
 
         $controller = null;
         $class = new ReflectionClass($value);
-        $params = $class->getConstructor()->getParameters();
-        if (array_key_exists(2, $params)) {
+        $dependencies = $class->getConstructor()->getParameters();
 
-            $repository = $params[2]->getClass();
+        if (!empty($dependencies)) {
 
-            return new $value($c, $app, $repository->newInstance());
+            $dependency = $dependencies[0]->getClass();
+
+            return new $value($dependency->newInstance());
         }
+
         return new $value($c, $app);
     };
 }
