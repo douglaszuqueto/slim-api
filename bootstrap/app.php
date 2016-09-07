@@ -35,16 +35,8 @@ $app = new Slim\App($settings);
  * Register Configs
  */
 
-$capsule = new \Illuminate\Database\Capsule\Manager();
-$capsule->addConnection($app->getContainer()['settings']['db']);
-$capsule->setAsGlobal();
-$capsule->bootEloquent();
-
-$app->getContainer()['db'] = function ($c) use ($capsule) {
-    return $capsule;
-};
-
-//require __DIR__ . '/../config/monolog.php';
+require __DIR__ . '/../config/monolog.php';
+require __DIR__ . '/../config/eloquent.php';
 require __DIR__ . '/../config/controllers.php';
 
 
