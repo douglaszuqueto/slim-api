@@ -39,7 +39,6 @@ require __DIR__ . '/../config/monolog.php';
 require __DIR__ . '/../config/eloquent.php';
 require __DIR__ . '/../config/controllers.php';
 
-
 /**
  * Register Routes
  */

@@ -2,6 +2,7 @@
 
 namespace App\Domains\User\Repositories;
 
+use App\Domains\Core\AbstractRepository;
 use App\Domains\User\Entities\User;
 
 class UserRepository extends AbstractRepository
@@ -15,5 +16,5 @@ class UserRepository extends AbstractRepository
     /**
      * UserRepository constructor.
      */
- 
+
 }

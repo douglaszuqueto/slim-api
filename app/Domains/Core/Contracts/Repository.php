@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domains\User\Contracts;
+namespace App\Domains\Core\Contracts;
 
-interface ActiveRecordRepository
+interface Repository
 {
     public function all();
 

@@ -2,10 +2,9 @@
 
 $container = $app->getContainer();
 
-$container['logger'] = function ($c) {
-    $settings = $c->get('settings')['logger'];
-    $logger = new Monolog\Logger($settings['name']);
-    $logger->pushProcessor(new Monolog\Processor\UidProcessor());
-    $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], Monolog\Logger::DEBUG));
+$container['logger'] = function($c) {
+    $logger = new \Monolog\Logger('API');
+    $file_handler = new \Monolog\Handler\StreamHandler(__DIR__ . "/../storage/logs/app.log");
+    $logger->pushHandler($file_handler);
     return $logger;
 };

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domains\User\Repositories;
+namespace App\Domains\Core;
 
-use App\Domains\User\Contracts\ActiveRecordRepository;
+use App\Domains\Core\Contracts\Repository;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class AbstractRepository implements ActiveRecordRepository
+abstract class AbstractRepository implements Repository
 {
     /**
      * @var Model
