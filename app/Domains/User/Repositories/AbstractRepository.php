@@ -2,8 +2,8 @@
 
 namespace App\Domains\User\Repositories;
 
-use ActiveRecord\Model;
 use App\Domains\User\Contracts\ActiveRecordRepository;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractRepository implements ActiveRecordRepository
 {
@@ -26,9 +26,9 @@ abstract class AbstractRepository implements ActiveRecordRepository
     {
         $model = $this->model();
 
-//        if ($model instanceof Model) {
-//            throw new Exception('Fatal Error');
-//        }
+        if ($model instanceof Model) {
+            throw new Exception('Fatal Error');
+        }
         return $this->model = new $model;
     }
 
@@ -38,16 +38,12 @@ abstract class AbstractRepository implements ActiveRecordRepository
 
     public function all()
     {
-        $all = $this->model->all();
-
-        return $this->ArraySerializer($all);
+        return $this->model->all();
     }
 
     public function find($id)
     {
-        $user = $this->model->find($id);
-
-        return $this->ArraySerializer($user, false);
+        return $this->model->find($id);
     }
 
     public function create(array $data)
@@ -62,8 +58,7 @@ abstract class AbstractRepository implements ActiveRecordRepository
 
     public function delete($id)
     {
-        $model = $this->model->find($id);
-        return $model->delete();
+        return $this->model->find($id)->delete();
     }
 
     protected function ArraySerializer($dados, $multiple = true)
