@@ -5,7 +5,7 @@ return [
         'displayErrorDetails' => true,
         'db' => [
             'driver' => 'mysql',
-            'host' => '192.168.33.20',
+            'host' => '192.168.33.50',
             'database' => 'test',
             'username' => 'root',
             'password' => 'root',

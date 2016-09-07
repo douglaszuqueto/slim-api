@@ -14,7 +14,8 @@
     "monolog/monolog": "^1.19",
     "vlucas/phpdotenv": "^2.2",
     "tuupola/slim-jwt-auth": "^2.3",
-    "illuminate/database": "~5.3"
+    "illuminate/database": "~5.3",
+    "robmorgan/phinx": "^0.6.4"
 
   },
   "autoload": {
