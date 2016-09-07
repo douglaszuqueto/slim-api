@@ -1,6 +1,6 @@
 <?php
 
-require './vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 
 /**
@@ -26,7 +26,6 @@ $app = new Slim\App($settings);
 //require __DIR__ . '/../app/Core/Http/Middlewares/jwt.php';
 
 
-
 /**
  * Register Configs
  */
@@ -37,8 +36,8 @@ require __DIR__ . '/../config/controllers.php';
 /**
  * Register Routes
  */
-require __DIR__ . './../app/Core/Http/routes.php';
-require __DIR__ . './../app/Applications/User/Http/routes.php';
+require __DIR__ . '/../app/Core/Http/routes.php';
+require __DIR__ . '/../app/Applications/User/Http/routes.php';
 
 /**
  * Return $app

@@ -39,22 +39,15 @@ abstract class AbstractRepository implements ActiveRecordRepository
     public function all()
     {
         $all = $this->model->all();
-        $keys = (array_keys($this->model->attributes()));
-        $data = [];
-        $i = 0;
 
-        foreach ($all as $row) {
-            foreach ($keys as $key) {
-                $data[$i][$key] = $row->$key;
-            }
-            $i++;
-        }
-        return $data;
+        return $this->ArraySerializer($all);
     }
 
     public function find($id)
     {
-        return $this->model->find($id);
+        $user = $this->model->find($id);
+
+        return $this->ArraySerializer($user, false);
     }
 
     public function create(array $data)
@@ -71,5 +64,27 @@ abstract class AbstractRepository implements ActiveRecordRepository
     {
         $model = $this->model->find($id);
         return $model->delete();
+    }
+
+    protected function ArraySerializer($dados, $multiple = true)
+    {
+        $keys = (array_keys($this->model->attributes()));
+        $data = [];
+        $i = 0;
+
+        if (!$multiple) {
+            foreach ($keys as $key) {
+                $data[$i][$key] = $dados->$key;
+            }
+            return $data;
+        }
+
+        foreach ($dados as $row) {
+            foreach ($keys as $key) {
+                $data[$i][$key] = $row->$key;
+            }
+            $i++;
+        }
+        return $data;
     }
 }

@@ -30,17 +30,6 @@ class UserController extends Controller
 
     public function index(Request $request, Response $response, $args)
     {
-        return $this->view->render($response, 'users/index.html', [
-            'name' => 'Douglas Zuqueto',
-            'users' => $this->repository->all()
-        ]);
-    }
-
-    public function json(Request $request, Response $response, $args)
-    {
-//        echo '<pre>';
-//        var_dump(($this->repository->all()));
-//        echo '</pre>';
         $response->withJson($this->repository->all(), 200);
     }
 
@@ -48,48 +37,18 @@ class UserController extends Controller
     {
         $route = $request->getAttribute('route');
         $id = $route->getArgument('id');
-
-//        $user = new User();
-//        return $this->view->render($response, 'users/show.html', [
-//            'user' => $user->find($id)
-//        ]);
-        return $this->view->render($response, 'users/show.html', [
-            'user' => $this->repository->find($id)
-        ]);
-    }
-
-    public function create(Request $request, Response $response, $args)
-    {
-        return $this->view->render($response, 'users/create.html');
+        $response->withJson($this->repository->find($id), 200);
     }
 
     public function store(Request $request, Response $response, $args)
     {
         $data = $request->getParams();
-//        $user = new User();
-//        $user->name = $data['name'];
-//        $user->email = $data['email'];
-//        if ($user->save()) {
-//            return $response->withRedirect('/users', 200);
-//        }
-//        return 'Erro';
-        if ($this->repository->create($data)) {
-            return $response->withRedirect('/users', 200);
-        }
-        return 'Erro';
-    }
 
-    public function edit(Request $request, Response $response, $args)
-    {
-        $route = $request->getAttribute('route');
-        $id = $route->getArgument('id');
-        $user = new User();
-//        return $this->view->render($response, 'users/edit.html', [
-//            'user' => $user->find($id)
-//        ]);
-        return $this->view->render($response, 'users/edit.html', [
-            'user' => $this->repository->find($id)
-        ]);
+        if (!$this->repository->create($data)) {
+            $response->withJson(['error' => true, 'message' => 'User created failed!'], 200);
+        }
+
+        $response->withJson(['error' => false, 'message' => 'User is Created!'], 200);
     }
 
     public function update(Request $request, Response $response, $args)
@@ -106,27 +65,16 @@ class UserController extends Controller
         }
     }
 
-    public function remove(Request $request, Response $response, $args)
-    {
-        $route = $request->getAttribute('route');
-        $id = $route->getArgument('id');
-        return $this->view->render($response, 'users/remove.html', [
-            'user' => User::find($id)
-        ]);
-    }
-
     public function destroy(Request $request, Response $response, $args)
     {
         $route = $request->getAttribute('route');
         $id = $route->getArgument('id');
 
-        if ($this->repository->delete($id)) {
-            return $response->withRedirect('/users', 200);
+        if (!$this->repository->delete($id)) {
+            $response->withJson(['error' => true, 'message' => 'User deleted is failed!'], 200);
         }
-//        $user = User::find($id);
-//        if ($user->delete()) {
-//            return $response->withRedirect('/users', 200);
-//        }
+
+        $response->withJson(['error' => false, 'message' => 'User is deleted!'], 200);
     }
 
 }
