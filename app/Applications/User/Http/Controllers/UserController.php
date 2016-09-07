@@ -30,6 +30,7 @@ class UserController extends Controller
 
     public function index(Request $request, Response $response, $args)
     {
+
         $response->withJson($this->repository->all(), 200);
     }
 
