@@ -15,17 +15,26 @@ class UserController extends Controller
      * @var UserRepository
      */
     private $repository;
+    /**
+     * @var User
+     */
+    private $model;
 
     /**
      * UserController constructor.
      * @param UserRepository $repository
+     * @param User $model
      */
-    public function __construct(UserRepository $repository)
+    public function __construct(UserRepository $repository, User $model)
     {
         parent::__construct();
         $this->repository = $repository;
+        $this->model = $model;
     }
 
+    public function teste(User $user){
+        $user->all();
+    }
     public function index(Request $request, Response $response, $args)
     {
         $response->withJson($this->repository->all(), 200);
